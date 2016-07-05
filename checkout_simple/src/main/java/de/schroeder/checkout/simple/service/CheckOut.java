@@ -57,4 +57,11 @@ public class CheckOut {
 
         return result;
     }
+
+    /**
+     * reset the productList
+     */
+    public void reset(){
+        this.productList.clear();
+    }
 }

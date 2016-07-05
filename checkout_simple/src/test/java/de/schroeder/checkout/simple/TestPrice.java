@@ -18,11 +18,9 @@ public class TestPrice {
         for(int i=0; i<goods.length(); i++) {
 
             co.scan(String.valueOf(goods.charAt(i)));
-
         }
 
         return co.total();
-
     }
 
     @Test

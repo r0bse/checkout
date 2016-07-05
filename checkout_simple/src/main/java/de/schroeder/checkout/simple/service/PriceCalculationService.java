@@ -1,10 +1,6 @@
 package de.schroeder.checkout.simple.service;
 
-import de.schroeder.checkout.simple.domain.DiscountEntity;
 import de.schroeder.checkout.simple.domain.SkuEntity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author schroeder
@@ -46,5 +42,23 @@ public class PriceCalculationService{
             instance = new PriceCalculationService();
         }
         return instance;
+    }
+
+    /**
+     * copied from testClass
+     *
+     * @param goods
+     * @return
+     */
+    public int calculatePrice(String goods) {
+
+        CheckOut co = new CheckOut();
+
+        for(int i=0; i<goods.length(); i++) {
+
+            co.scan(String.valueOf(goods.charAt(i)));
+        }
+
+        return co.total();
     }
 }
