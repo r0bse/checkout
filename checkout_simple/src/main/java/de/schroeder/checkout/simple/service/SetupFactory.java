@@ -5,6 +5,7 @@ import de.schroeder.checkout.simple.domain.SkuEntity;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,15 +14,16 @@ import java.util.Set;
 public class SetupFactory {
 
     private static SetupFactory instance;
+
     private final HashMap<SkuEntity, Map<Integer, DiscountByAmountEntity>> productMap;
 
-    private SetupFactory(){
+    private SetupFactory() {
         this.productMap = new HashMap<>();
     }
 
-    private static final SetupFactory getInstance(){
+    public static final SetupFactory getInstance() {
 
-        if(instance == null){
+        if ( instance == null ) {
             instance = new SetupFactory();
             instance.setup();
         }
@@ -35,15 +37,19 @@ public class SetupFactory {
         Map<Integer, DiscountByAmountEntity> cSet = new HashMap<>();
         Map<Integer, DiscountByAmountEntity> dSet = new HashMap<>();
 
-        aSet.add(new DiscountByAmountEntity(1, 1.0));
-        aSet.add(new DiscountByAmountEntity(3, (100*100/3)/40));//product A in table has a special price
-        bSet.add(new DiscountByAmountEntity(2, (100*80/2)/50));//product B in table has a special price
-        cSet.add(new DiscountByAmountEntity(1, 1.0));
-        dSet.add(new DiscountByAmountEntity(1, 1.0));
+        aSet.put( 1, new DiscountByAmountEntity( 1.0 ) );
+        aSet.put( 3, new DiscountByAmountEntity( ( 100 * 100 / 3 ) / 40 ) );//product A has a discount
+        bSet.put( 2, new DiscountByAmountEntity( ( 100 * 80 / 2 ) / 50 ) );//product B has a discount
+        cSet.put( 1, new DiscountByAmountEntity( 1.0 ) );
+        dSet.put( 1, new DiscountByAmountEntity( 1.0 ) );
 
-        productMap.put(new SkuEntity('A'), aSet);
-        productMap.put(new SkuEntity('B'), bSet);
-        productMap.put(new SkuEntity('C'), cSet);
-        productMap.put(new SkuEntity('D'), dSet);
+        productMap.put( new SkuEntity( 'A' ), aSet );
+        productMap.put( new SkuEntity( 'B' ), bSet );
+        productMap.put( new SkuEntity( 'C' ), cSet );
+        productMap.put( new SkuEntity( 'D' ), dSet );
+    }
+
+    public HashMap<SkuEntity, Map<Integer, DiscountByAmountEntity>> getProductMap() {
+        return productMap;
     }
 }

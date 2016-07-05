@@ -7,7 +7,11 @@ public class DiscountByAmountEntity {
 
     private final Double discount;
 
-    public DiscountByAmountEntity(Integer amount, double discount) {
+    public DiscountByAmountEntity(double discount) {
         this.discount = discount;
+    }
+
+    public Double getDiscount() {
+        return discount;
     }
 }
