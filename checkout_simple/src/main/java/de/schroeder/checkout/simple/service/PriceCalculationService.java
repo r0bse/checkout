@@ -1,6 +1,6 @@
 package de.schroeder.checkout.simple.service;
 
-import de.schroeder.checkout.simple.domain.DiscountByAmountEntity;
+import de.schroeder.checkout.simple.domain.DiscountEntity;
 import de.schroeder.checkout.simple.domain.SkuEntity;
 
 import java.util.HashMap;
@@ -10,27 +10,41 @@ import java.util.Map;
  * @author schroeder
  * @date 05. Jul 2016
  */
-public class PriceCalculationService {
+public class PriceCalculationService{
 
-    private final HashMap<SkuEntity, Map<Integer, DiscountByAmountEntity>> productMap;
+    private static PriceCalculationService instance;
 
-    public PriceCalculationService(){
+    private PriceCalculationService() {
 
-        SetupFactory factory = SetupFactory.getInstance();
-        this.productMap = factory.getProductMap();
+        ProductFactory factory = ProductFactory.getInstance();
     }
 
     /**
-     * calculate whole price for given product
+     * calculate price for given products
+     * when amount equals or is bigger than the defined treshold, apply the discount
      *
-     * @param productName
+     * @param sku
      * @param amount
      * @return
      */
-    public Double calculatePrice(char productName, Integer amount){
+    public Double calculatePrice( SkuEntity sku,
+                                  Integer amount ) {
 
-        Double discount = productMap.get(productName).get(amount).getDiscount();
+        Double discount = 1.0;
 
-        return amount * discount;
+        if ( amount >= sku.getDiscountEntity().getAmount() ) {
+            discount = sku.getDiscountEntity().getDiscount();
+        }
+
+        return amount * sku.getDefaultCentPrice() * discount;
+    }
+
+
+    public static final PriceCalculationService getInstance() {
+
+        if ( instance == null ) {
+            instance = new PriceCalculationService();
+        }
+        return instance;
     }
 }

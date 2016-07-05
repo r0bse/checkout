@@ -1,6 +1,9 @@
 package de.schroeder.checkout.simple.service;
 
+import de.schroeder.checkout.simple.domain.SkuEntity;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -11,25 +14,27 @@ import java.util.stream.IntStream;
  */
 public class CountService {
 
+    private static CountService instance;
+
     /**
      * count amount of given Characters in String
      *
-     * @param productNames
+     * @param productList
      * @param productToCount
-     * @return
+     *
+     * @return a long since stream api count() returns one
      */
-    public Long countAmount( String productNames,
+    public Integer countAmount( List<SkuEntity> productList,
                              Character productToCount ) {
 
-        IntStream charIntStream = productNames.chars(); //normally i would expect a Stream<Character>, but oracle seems to knew it better
-        Long result = charIntStream.mapToObj( integer -> ( char ) integer ) //map char integer representation to actual chars
-                                    .filter( character -> character.equals( productToCount ) )
-                                    .count();
+        Long result = productList.stream()
+                .filter( sku -> productToCount.equals( sku.getProductName() ) )
+                .count();
 
-        //same result but less readable/understandable
-        //Long result = productNames.chars().filter( num -> num == Character.getNumericValue( productToCount ) ).count();
-
-        return result;
+        if(result > Integer.MAX_VALUE){
+            throw new NumberFormatException("The calculated amount of products is bigger than Integer.Max_Value !");
+        }
+        return result.intValue();
     }
 
     /**
@@ -45,5 +50,15 @@ public class CountService {
                 .collect( Collectors.toSet() );
 
         return set.size();
+    }
+
+    private CountService(){}
+
+    public static final CountService getInstance() {
+
+        if ( instance == null ) {
+            instance = new CountService();
+        }
+        return instance;
     }
 }

@@ -1,9 +1,15 @@
 package de.schroeder.checkout.simple.service;
 
+import de.schroeder.checkout.simple.domain.DiscountEntity;
+import de.schroeder.checkout.simple.domain.SkuEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -18,7 +24,7 @@ public class CountServiceTest {
 
     @Before
     public void setup() {
-        this.countService = new CountService();
+        this.countService = CountService.getInstance();
     }
 
     @Test
@@ -42,13 +48,20 @@ public class CountServiceTest {
     @Test
     public void testCountDifferentProducts() throws Exception {
 
-        Long resultA = countService.countAmount( "ABBA", 'A' );
-        assertEquals( (Long) 2L, resultA );
+        SkuEntity skuA1 = new SkuEntity( 'A', 20L, new DiscountEntity( 0.20, 2 ) );
+        SkuEntity skuA2 = new SkuEntity( 'A', 20L, new DiscountEntity( 0.20, 2 ) );
+        SkuEntity skuB1 = new SkuEntity( 'B', 20L, new DiscountEntity( 0.20, 2 ) );
+        SkuEntity skuB2 = new SkuEntity( 'B', 20L, new DiscountEntity( 0.20, 2 ) );
 
-        Long resultB = countService.countAmount( "ABBA", 'B' );
-        assertEquals( (Long) 2L, resultB );
+        List<SkuEntity> skuList = Arrays.asList( skuA1, skuA2, skuB1, skuB2);
 
-        Long resultC = countService.countAmount( "ABBA", 'C' );
-        assertEquals( (Long) 0L, resultC );
+        Integer resultA = countService.countAmount( skuList, 'A' );
+        assertEquals( (Integer) 2, resultA );
+
+        Integer resultB = countService.countAmount( skuList, 'B' );
+        assertEquals( (Integer) 2, resultB );
+
+        Integer resultC = countService.countAmount( skuList, 'C' );
+        assertEquals( (Integer) 0, resultC );
     }
 }

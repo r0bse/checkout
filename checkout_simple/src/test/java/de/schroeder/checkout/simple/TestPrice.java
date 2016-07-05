@@ -1,5 +1,6 @@
 package de.schroeder.checkout.simple;
 
+import de.schroeder.checkout.simple.service.CheckOut;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,7 +13,7 @@ public class TestPrice {
 
     public int calculatePrice(String goods) {
 
-        CheckOut co = new CheckOut(rule);
+        CheckOut co = new CheckOut();
 
         for(int i=0; i<goods.length(); i++) {
 
@@ -59,19 +60,19 @@ public class TestPrice {
 
     public void incremental() {
 
-        CheckOut co = new CheckOut(rule);
+        CheckOut co = new CheckOut();
 
-        assertEquals(0, co.total);
+        assertEquals(0, co.total());
 
-        co.scan("A"); assertEquals(40, co.total);
+        co.scan("A"); assertEquals(40, co.total());
 
-        co.scan("B"); assertEquals(90, co.total);
+        co.scan("B"); assertEquals(90, co.total());
 
-        co.scan("A"); assertEquals(130, co.total);
+        co.scan("A"); assertEquals(130, co.total());
 
-        co.scan("A"); assertEquals(150, co.total);
+        co.scan("A"); assertEquals(150, co.total());
 
-        co.scan("B"); assertEquals(180, co.total);
+        co.scan("B"); assertEquals(180, co.total());
 
     }
 
