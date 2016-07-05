@@ -13,7 +13,7 @@ import java.util.Set;
 public class SetupFactory {
 
     private static SetupFactory instance;
-    private final HashMap<SkuEntity, Set<DiscountByAmountEntity>> productMap;
+    private final HashMap<SkuEntity, Map<Integer, DiscountByAmountEntity>> productMap;
 
     private SetupFactory(){
         this.productMap = new HashMap<>();
@@ -30,10 +30,10 @@ public class SetupFactory {
 
     private void setup() {
 
-        Set<DiscountByAmountEntity> aSet = new HashSet<>();
-        Set<DiscountByAmountEntity> bSet = new HashSet<>();
-        Set<DiscountByAmountEntity> cSet = new HashSet<>();
-        Set<DiscountByAmountEntity> dSet = new HashSet<>();
+        Map<Integer, DiscountByAmountEntity> aSet = new HashMap<>();
+        Map<Integer, DiscountByAmountEntity> bSet = new HashMap<>();
+        Map<Integer, DiscountByAmountEntity> cSet = new HashMap<>();
+        Map<Integer, DiscountByAmountEntity> dSet = new HashMap<>();
 
         aSet.add(new DiscountByAmountEntity(1, 1.0));
         aSet.add(new DiscountByAmountEntity(3, (100*100/3)/40));//product A in table has a special price

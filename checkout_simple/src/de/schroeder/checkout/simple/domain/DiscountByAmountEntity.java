@@ -5,11 +5,9 @@ package de.schroeder.checkout.simple.domain;
  */
 public class DiscountByAmountEntity {
 
-    private final Integer amount;
     private final Double discount;
 
     public DiscountByAmountEntity(Integer amount, double discount) {
-        this.amount = amount;
         this.discount = discount;
     }
 }
