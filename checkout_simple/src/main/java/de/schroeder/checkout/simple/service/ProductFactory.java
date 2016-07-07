@@ -19,6 +19,12 @@ public class ProductFactory {
         this.productMap = new HashMap<>();
     }
 
+
+    /**
+     * get the instance of this class as singleton
+     *
+     * @return
+     */
     public static final ProductFactory getInstance() {
 
         if ( instance == null ) {
@@ -61,4 +67,27 @@ public class ProductFactory {
         Double result = prozentwert / grundwert;
         return result;
     }
+
+    /**
+     * add a product to productList, if it exists, replace it
+     *
+     * @param productName    the name of the product
+     * @param defaultPrice   the default price of the product
+     * @param discountAmount the amount which triggers the discountprice
+     * @param discountPrice  the price whihc applies on discount
+     */
+    public SkuEntity addOrChangeProduct( Character productName,
+                                         Long defaultPrice,
+                                         Integer discountAmount,
+                                         Double discountPrice ) {
+
+        Long grundwert = ( discountAmount * defaultPrice );
+        DiscountEntity discount = new DiscountEntity( calculateDiscount( discountPrice, grundwert.doubleValue() ), discountAmount );
+        SkuEntity sku = new SkuEntity( productName, defaultPrice, discount );
+        productMap.put( productName,  sku);
+
+        return sku;
+    }
+
+    ;
 }

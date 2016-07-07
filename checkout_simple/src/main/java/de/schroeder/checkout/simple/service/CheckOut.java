@@ -1,5 +1,6 @@
 package de.schroeder.checkout.simple.service;
 
+import com.sun.javafx.binding.StringFormatter;
 import de.schroeder.checkout.simple.domain.SkuEntity;
 
 import java.util.*;
@@ -13,10 +14,15 @@ public class CheckOut {
 
     private final List<SkuEntity> productList;
     private final Map<Character, SkuEntity> productmap;
+
     private final ProductFactory productFactory = ProductFactory.getInstance();
     private final PriceCalculationService calculationService = PriceCalculationService.getInstance();
     private final CountService countService = CountService.getInstance();
 
+    /**
+     * normally I would build as a service and as a singleton,
+     * but since I don't want to change the test, I'll keep the constructor this way
+     */
     public CheckOut() {
 
         productList = new ArrayList<>();
@@ -33,7 +39,13 @@ public class CheckOut {
         if ( productName.length() > 1 ) {
             throw new IllegalArgumentException( "Productname is only allowed to have a length of 1 !" );
         }
+
         SkuEntity sku = productmap.get( productName.charAt( 0 ) );
+
+        if(null == sku){
+
+            throw new IllegalArgumentException( String.format("Could not find product with name %s", productName.charAt( 0 ) ));
+        }
         productList.add( sku );
     }
 
@@ -47,6 +59,7 @@ public class CheckOut {
         Set<SkuEntity> set = productList.stream()
                                         .collect( Collectors.toSet() );
 
+        //for each product, calculate amount and calculate price
         int result = set.stream()
                 .map( sku -> {
                     Integer amount = countService.countAmount( productList, sku.getProductName() );

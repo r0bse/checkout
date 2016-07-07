@@ -55,7 +55,6 @@ public class TestPrice {
     }
 
     @Test
-
     public void incremental() {
 
         CheckOut co = new CheckOut();
@@ -74,4 +73,15 @@ public class TestPrice {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void notExistingProduct() {
+        CheckOut co = new CheckOut();
+        co.scan("F");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void tooLongName() {
+        CheckOut co = new CheckOut();
+        co.scan("FAIL");
+    }
 }

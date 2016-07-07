@@ -10,14 +10,23 @@ public class PriceCalculationService{
 
     private static PriceCalculationService instance;
 
-    private PriceCalculationService() {
+    private PriceCalculationService() {}
 
-        ProductFactory factory = ProductFactory.getInstance();
+    /**
+     * get the instance of this class as singleton
+     *
+     * @return
+     */
+    public static final PriceCalculationService getInstance() {
+
+        if ( instance == null ) {
+            instance = new PriceCalculationService();
+        }
+        return instance;
     }
 
     /**
      * calculate price for given products
-     * when amount equals or is bigger than the defined treshold, apply the discount
      *
      * @param sku
      * @param amount
@@ -27,21 +36,27 @@ public class PriceCalculationService{
                                   Integer amount ) {
 
         Double discount = 1.0;
+        Double result = 0.0;
 
-        if ( amount >= sku.getDiscountEntity().getAmount() ) {
+        //calculate the amount of products which are not credited by amount
+        Integer overspill = amount % sku.getDiscountEntity().getAmount();
+
+        //if discount maps directly to a multiplikation of discountamount of prducts
+        if ( overspill == 0) {
             discount = sku.getDiscountEntity().getDiscount();
+            result = amount * sku.getDefaultCentPrice() * discount;
+        }
+        //all other cases where discountamount does not match the productamount
+        else{
+            //calculate the amount where discount is aplyable
+            Integer discountAmount = amount - overspill;
+            //calculate discount price
+            result = discountAmount * sku.getDefaultCentPrice() * sku.getDiscountEntity().getDiscount();
+            //add the remaining price
+            result += overspill * sku.getDefaultCentPrice();
         }
 
-        return amount * sku.getDefaultCentPrice() * discount;
-    }
-
-
-    public static final PriceCalculationService getInstance() {
-
-        if ( instance == null ) {
-            instance = new PriceCalculationService();
-        }
-        return instance;
+        return result;
     }
 
     /**

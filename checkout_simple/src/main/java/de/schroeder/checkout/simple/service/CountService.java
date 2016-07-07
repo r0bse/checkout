@@ -16,6 +16,21 @@ public class CountService {
 
     private static CountService instance;
 
+    private CountService(){}
+
+    /**
+     * get the instance of this class as singleton
+     *
+     * @return
+     */
+    public static final CountService getInstance() {
+
+        if ( instance == null ) {
+            instance = new CountService();
+        }
+        return instance;
+    }
+
     /**
      * count amount of given Characters in String
      *
@@ -31,6 +46,7 @@ public class CountService {
                 .filter( sku -> productToCount.equals( sku.getProductName() ) )
                 .count();
 
+        //since we cast to integer we should check that the max value
         if(result > Integer.MAX_VALUE){
             throw new NumberFormatException("The calculated amount of products is bigger than Integer.Max_Value !");
         }
@@ -50,15 +66,5 @@ public class CountService {
                 .collect( Collectors.toSet() );
 
         return set.size();
-    }
-
-    private CountService(){}
-
-    public static final CountService getInstance() {
-
-        if ( instance == null ) {
-            instance = new CountService();
-        }
-        return instance;
     }
 }
