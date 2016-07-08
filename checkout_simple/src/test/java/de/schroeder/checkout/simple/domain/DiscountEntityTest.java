@@ -1,7 +1,5 @@
 package de.schroeder.checkout.simple.domain;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -13,9 +11,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith( MockitoJUnitRunner.class )
 public class DiscountEntityTest {
 
+    @Test
+    public void testNormalInstantiation(){
+        new DiscountEntity( 10.01, 1 );
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testFaultInstantiation1(){
-        new DiscountEntity( 1.0001, 1 );
+        new DiscountEntity( 100.01, 1 );
     }
 
     @Test(expected = IllegalArgumentException.class)

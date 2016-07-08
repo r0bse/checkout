@@ -95,7 +95,8 @@ public class InputController {
         String discountPriceString = scanner.next();
         Double discountPrice = numberParseService.parseToDouble( discountPriceString );
 
-        productFactory.addOrChangeProduct( productName.charAt( 0 ), defaulPrice, discountAmount, discountPrice );
+        productFactory.addOrChangeProduct(productName.charAt(0), defaulPrice, discountAmount, discountPrice);
+
     }
 
     /**
@@ -109,7 +110,7 @@ public class InputController {
 
         List<Character> sortedProducts = new ArrayList<>();
         productSet.stream()
-                .sorted()
+                .sorted() //sort for better readability
                 .forEach( c -> sortedProducts.add( c ) );
 
         System.out.print( String.format( "\nPlease enter the desired checkout items %s in any order:  ", sortedProducts ) );

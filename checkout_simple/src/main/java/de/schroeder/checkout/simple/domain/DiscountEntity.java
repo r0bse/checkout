@@ -15,7 +15,7 @@ public class DiscountEntity {
         Objects.requireNonNull(discount);
         Objects.requireNonNull(amount);
 
-        if(discount > 1.0 || discount < 0){
+        if(discount > 100 || discount < 0){
             throw new IllegalArgumentException( "discount can't be bigger than 100% or negative" );
         }
 
@@ -23,8 +23,12 @@ public class DiscountEntity {
         this.amount = amount;
     }
 
+    /**
+     * get discount as value between 0 and 1
+     * @return
+     */
     public Double getDiscount() {
-        return discount;
+        return discount/100.0;
     }
 
     public Integer getAmount() {

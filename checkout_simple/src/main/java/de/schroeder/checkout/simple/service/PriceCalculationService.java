@@ -32,7 +32,7 @@ public class PriceCalculationService{
      * @param amount
      * @return
      */
-    public Double calculatePrice( SkuEntity sku,
+    public Integer calculatePrice( SkuEntity sku,
                                   Integer amount ) {
 
         Double discount = 1.0;
@@ -41,14 +41,14 @@ public class PriceCalculationService{
         //calculate the amount of products which are not credited by amount
         Integer overspill = amount % sku.getDiscountEntity().getAmount();
 
-        //if discount maps directly to a multiplikation of discountamount of prducts
+        //apply discount if amount matches to a multiplikation of amount and discount
         if ( overspill == 0) {
             discount = sku.getDiscountEntity().getDiscount();
             result = amount * sku.getDefaultCentPrice() * discount;
         }
         //all other cases where discountamount does not match the productamount
         else{
-            //calculate the amount where discount is aplyable
+            //calculate the amount where discount is applyable
             Integer discountAmount = amount - overspill;
             //calculate discount price
             result = discountAmount * sku.getDefaultCentPrice() * sku.getDiscountEntity().getDiscount();
@@ -56,7 +56,7 @@ public class PriceCalculationService{
             result += overspill * sku.getDefaultCentPrice();
         }
 
-        return result;
+        return (int) Math.round(result);
     }
 
     /**

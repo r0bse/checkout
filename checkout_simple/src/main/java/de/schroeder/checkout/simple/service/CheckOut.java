@@ -1,9 +1,11 @@
 package de.schroeder.checkout.simple.service;
 
-import com.sun.javafx.binding.StringFormatter;
 import de.schroeder.checkout.simple.domain.SkuEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -65,7 +67,7 @@ public class CheckOut {
                     Integer amount = countService.countAmount( productList, sku.getProductName() );
                     return calculationService.calculatePrice( sku, amount );
                 } )
-                .mapToInt( i -> i.intValue() )
+                .mapToInt( i -> i.intValue() )      //sum needs an int and calculate price provides an Integer
                 .sum();
 
         return result;
