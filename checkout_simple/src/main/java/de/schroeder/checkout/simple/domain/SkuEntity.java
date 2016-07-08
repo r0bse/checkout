@@ -19,6 +19,9 @@ public class SkuEntity {
                       Long defaultCentPrice,
                       DiscountEntity discountEntity) {
 
+        if( 0>= defaultCentPrice){
+            throw new IllegalArgumentException("Prices must be bigger than zero!");
+        }
         this.productName = productName;
         this.defaultCentPrice = defaultCentPrice;
         this.discountEntity = discountEntity;
