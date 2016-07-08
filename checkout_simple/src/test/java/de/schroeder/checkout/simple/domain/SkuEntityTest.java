@@ -21,12 +21,17 @@ public class SkuEntityTest {
         DiscountEntity discountB = new DiscountEntity( 0.8, 5 );
 
         SkuEntity skuA1 = new SkuEntity( 'A', 20L, discountA );
+
         SkuEntity skuA2 = new SkuEntity( 'A', 20L, discountA );
-        SkuEntity skuB = new SkuEntity( 'B', 30L, discountB );
+        SkuEntity skuB = new SkuEntity( 'B', 20L, discountA );
+        SkuEntity skuC = new SkuEntity( 'A', 30L, discountA );
+        SkuEntity skuD = new SkuEntity( 'A', 20L, discountB );
 
         assertEquals( skuA1, skuA2 );
         assertEquals( skuB, skuB );
         assertNotEquals( skuA1, skuB );
+        assertNotEquals( skuA1, skuC );
+        assertNotEquals( skuA1, skuD );
     }
 
     @Test(expected = IllegalArgumentException.class)
