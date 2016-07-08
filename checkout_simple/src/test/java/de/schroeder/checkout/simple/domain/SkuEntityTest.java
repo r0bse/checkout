@@ -1,10 +1,11 @@
 package de.schroeder.checkout.simple.domain;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * @author schroeder
@@ -26,5 +27,19 @@ public class SkuEntityTest {
         assertEquals( skuA1, skuA2 );
         assertEquals( skuB, skuB );
         assertNotEquals( skuA1, skuB );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testZeroPrice(){
+
+        DiscountEntity discount = new DiscountEntity( 0.8, 5 );
+        new SkuEntity( 'A', -0L, discount );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNegativePrice(){
+
+        DiscountEntity discount = new DiscountEntity( 0.8, 5 );
+        new SkuEntity( 'A', -1L, discount );
     }
 }
