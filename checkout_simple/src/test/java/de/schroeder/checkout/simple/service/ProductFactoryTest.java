@@ -1,11 +1,11 @@
 package de.schroeder.checkout.simple.service;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author schroeder
@@ -21,14 +21,21 @@ public class ProductFactoryTest {
         factory = ProductFactory.getInstance();
     }
 
+    /**
+     * test that the key of an entry maps to the name of the sku.productname
+     * @throws Exception
+     */
     @Test
-    public void testGetProductMap() throws Exception {
+    public void testProductMap() throws Exception {
 
         factory.getProductMap().entrySet()
                 .stream()
                 .forEach( entry -> assertEquals( entry.getKey(), entry.getValue().getProductName() ) );
     }
 
+    /**
+     * test singleton implementation
+     */
     @Test
     public void testSingleton(){
         assertEquals( factory, ProductFactory.getInstance() );
