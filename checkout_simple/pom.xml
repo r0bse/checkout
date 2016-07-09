@@ -6,10 +6,10 @@
     <groupId>de.schroeder.checkout.simple</groupId>
     <artifactId>checkout-simple</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
 
     <name>kata-checkout-simple</name>
     <description>implementation of kata test in java</description>
+    <packaging>jar</packaging>
 
     <dependencies>
 
@@ -29,5 +29,35 @@
         </dependency>
 
     </dependencies>
+    <build>
+        <finalName>checkout</finalName>
+        <plugins>
 
+            <!-- Set a JDK compiler level -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!-- Make this jar executable -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- Jar file entry point -->
+                            <mainClass>de.schroeder.checkout.simple.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>
