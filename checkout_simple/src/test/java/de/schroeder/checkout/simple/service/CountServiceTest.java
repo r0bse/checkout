@@ -2,12 +2,10 @@ package de.schroeder.checkout.simple.service;
 
 import de.schroeder.checkout.simple.domain.DiscountEntity;
 import de.schroeder.checkout.simple.domain.SkuEntity;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,12 +18,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith( MockitoJUnitRunner.class )
 public class CountServiceTest {
 
-    private CountService countService;
-
-    @Before
-    public void setup() {
-        this.countService = CountService.getInstance();
-    }
+    private CountService countService = CountService.getInstance();;
 
     @Test
     public void testCount_1() throws Exception {
@@ -63,5 +56,13 @@ public class CountServiceTest {
 
         Integer resultC = countService.countAmount( skuList, 'C' );
         assertEquals( (Integer) 0, resultC );
+    }
+
+    /**
+     * test singleton implementation
+     */
+    @Test
+    public void testSingleton(){
+        assertEquals( countService, CountService.getInstance() );
     }
 }
