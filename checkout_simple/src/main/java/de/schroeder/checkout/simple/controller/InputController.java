@@ -47,8 +47,8 @@ public class InputController {
     public void menu() {
 
         System.out.println( "\nIf you want to insert the productlist, press \t\"1\".");
-        System.out.println( "If you want to add an new product rule press \t\"2\".");
-        System.out.println( "If you want to exit the programm, press \t\t\"3\"." );
+        System.out.println( "If you want to add an new rule press \t\"2\".");
+        System.out.println( "If you want to exit the programm, press \t\"3\"." );
         System.out.println("Then press [Enter]\n");
 
         String input = scanner.next();
